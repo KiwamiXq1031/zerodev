@@ -338,5 +338,4 @@ app.get('/vps', (req, res) => {
     res.sendFile('./vps.html');
 });
 
-app.get('/'
 app.listen(3000, () => console.log("Server running on port 3000"));
