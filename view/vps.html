@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Hosting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #3498db;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+        .plans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        .plan {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 300px;
+            transition: transform 0.3s;
+        }
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .plan h2 {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .plan .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        .plan ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        .plan ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .order-form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .order-form h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background-color: #c0392b;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        .modal img {
+            max-width: 100%;
+            margin: 1rem 0;
+        }
+        .close-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">VPS Hosting</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/panel">Panel Hosting</a></li>
+                <li><a href="/vps">VPS Hosting</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>VPS Hosting Plans</h1>
+        
+        <div class="plans" id="vpsPlans">
+            <!-- Plans will be loaded here by JavaScript -->
+        </div>
+
+        <div class="order-form">
+            <h2>Order VPS</h2>
+            <form id="vpsOrderForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="hostname">Hostname</label>
+                    <input type="text" id="hostname" name="hostname" required>
+                </div>
+                <div class="form-group">
+                    <label for="vpsPlan">Select Plan</label>
+                    <select id="vpsPlan" name="vpsPlan" required>
+                        <option value="">-- Select a VPS Plan --</option>
+                        <!-- Options will be loaded by JavaScript -->
+                    </select>
+                </div>
+                <button type="submit" class="btn">Buy VPS</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <h2>Payment Information</h2>
+            <p>Please complete your payment using the QR code below:</p>
+            <img id="qrImage" src="" alt="QR Code">
+            <p id="qrString"></p>
+            <p>Expires in: <span id="expiration"></span></p>
+            <p id="paymentStatus">Checking payment status...</p>
+            <button class="close-btn" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Hosting Services. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load VPS plans from vps.json
+        fetch('/vps.json')
+            .then(response => response.json())
+            .then(data => {
+                const plansContainer = document.getElementById('vpsPlans');
+                const planSelect = document.getElementById('vpsPlan');
+                
+                data.forEach(plan => {
+                    // Create plan cards
+                    const planElement = document.createElement('div');
+                    planElement.className = 'plan';
+                    planElement.innerHTML = `
+                        <h2>${plan.name}</h2>
+                        <div class="price">$${plan.price}</div>
+                        <ul>
+                            <li>Size: ${plan.size}</li>
+                            <li>Image: ${plan.image}</li>
+                            <li>Region: ${plan.region}</li>
+                        </ul>
+                    `;
+                    plansContainer.appendChild(planElement);
+                    
+                    // Add to select dropdown
+                    const option = document.createElement('option');
+                    option.value = plan.id;
+                    option.textContent = `${plan.name} - $${plan.price}`;
+                    planSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error loading VPS plans:', error));
+
+        // Handle form submission
+        document.getElementById('vpsOrderForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const hostname = document.getElementById('hostname').value;
+            const vpsPlan = document.getElementById('vpsPlan').value;
+            
+            try {
+                const response = await fetch(`/api/create-vps?email=${encodeURIComponent(email)}&hostname=${encodeURIComponent(hostname)}&vpsId=${vpsPlan}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                
+                // Show payment modal
+                document.getElementById('qrImage').src = data.qrImage;
+                document.getElementById('qrString').textContent = data.qrString;
+                document.getElementById('expiration').textContent = data.expiration;
+                document.getElementById('paymentModal').style.display = 'flex';
+                
+                // Start checking payment status
+                checkPaymentStatus(data.transactionId);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing your order.');
+            }
+        });
+        
+        // Close modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('paymentModal').style.display = 'none';
+        });
+        
+        // Function to check payment status
+        async function checkPaymentStatus(transactionId) {
+            const statusElement = document.getElementById('paymentStatus');
+            
+            const checkStatus = async () => {
+                try {
+                    const response = await fetch(`/api/status/${transactionId}`);
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        statusElement.textContent = 'Error checking payment status.';
+                        return;
+                    }
+                    
+                    if (data.data.transaction_status === 'SUCCESS') {
+                        statusElement.textContent = 'Payment successful! Your VPS is being provisioned.';
+                        clearInterval(intervalId);
+                    } else {
+                        statusElement.textContent = 'Payment not yet completed. Please complete your payment.';
+                    }
+                } catch (error) {
+                    console.error('Error checking payment status:', error);
+                    statusElement.textContent = 'Error checking payment status.';
+                }
+            };
+            
+            // Check immediately
+            await checkStatus();
+            
+            // Then check every 5 seconds
+            const intervalId = setInterval(checkStatus, 5000);
+        }
+    </script>
+</body>
+</html>
